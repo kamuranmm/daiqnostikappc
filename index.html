@@ -144,10 +144,9 @@ function handleLogoTap(){tapCount++;clearTimeout(tapTimer);if(tapCount>=3){tapCo
 <div id="admin-login" class="screen">
   <div class="login-card" style="margin:auto">
     <h2>Admin Girişi</h2><p class="subtitle">Yalnız mütəxəssislər üçün</p>
-    <div class="form-group"><label>Email</label><input type="email" id="admin-email" placeholder="admin@ppctest.az"></div>
     <div class="form-group"><label>Şifrə</label><input type="password" id="admin-pass" placeholder="••••••" onkeydown="if(event.key==='Enter')adminLogin()"></div>
     <button class="btn btn-primary btn-full" onclick="adminLogin()">Daxil ol</button>
-    <div class="error-msg" id="admin-err">Email və ya şifrə yanlışdır.</div>
+    <div class="error-msg" id="admin-err">Şifrə yanlışdır.</div>
     <div style="margin-top:16px;text-align:center"><button class="back-btn" style="color:var(--muted);margin:auto" onclick="showScreen('home')">← Geri</button></div>
   </div>
 </div>
@@ -307,26 +306,21 @@ function switchTab(id,btn){
   btn.classList.add('active');
 }
 
-// ── ADMIN LOGIN (Firebase Auth) ──
-async function adminLogin(){
-  const email=document.getElementById('admin-email').value.trim();
+// ── ADMIN LOGIN ──
+function adminLogin(){
   const pass=document.getElementById('admin-pass').value;
   const err=document.getElementById('admin-err');
-  showLoading(true);
-  try{
-    await auth.signInWithEmailAndPassword(email, pass);
+  if(pass==='PPC@2025!Diaqnostika'){
     err.style.display='none';
     showScreen('admin-panel');
-  } catch(e){
+  } else {
     err.style.display='block';
-    err.textContent='Email və ya şifrə yanlışdır.';
+    err.textContent='Şifrə yanlışdır.';
     shake(document.querySelector('#admin-login .login-card'));
   }
-  finally{ showLoading(false); }
 }
 
 function adminLogout(){
-  auth.signOut();
   showScreen('home');
 }
 
