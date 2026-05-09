@@ -144,9 +144,10 @@ function handleLogoTap(){tapCount++;clearTimeout(tapTimer);if(tapCount>=3){tapCo
 <div id="admin-login" class="screen">
   <div class="login-card" style="margin:auto">
     <h2>Admin Girişi</h2><p class="subtitle">Yalnız mütəxəssislər üçün</p>
+    <div class="form-group"><label>İstifadəçi adı</label><input type="text" id="admin-user" placeholder="admin" onkeydown="if(event.key==='Enter')adminLogin()"></div>
     <div class="form-group"><label>Şifrə</label><input type="password" id="admin-pass" placeholder="••••••" onkeydown="if(event.key==='Enter')adminLogin()"></div>
     <button class="btn btn-primary btn-full" onclick="adminLogin()">Daxil ol</button>
-    <div class="error-msg" id="admin-err">Şifrə yanlışdır.</div>
+    <div class="error-msg" id="admin-err">İstifadəçi adı və ya şifrə yanlışdır.</div>
     <div style="margin-top:16px;text-align:center"><button class="back-btn" style="color:var(--muted);margin:auto" onclick="showScreen('home')">← Geri</button></div>
   </div>
 </div>
@@ -308,14 +309,15 @@ function switchTab(id,btn){
 
 // ── ADMIN LOGIN ──
 function adminLogin(){
+  const user=document.getElementById('admin-user').value;
   const pass=document.getElementById('admin-pass').value;
   const err=document.getElementById('admin-err');
-  if(pass==='PPC@2025!Diaqnostika'){
+  if(user==='admin' && pass==='PPC@2025!Diaqnostika'){
     err.style.display='none';
     showScreen('admin-panel');
   } else {
     err.style.display='block';
-    err.textContent='Şifrə yanlışdır.';
+    err.textContent='İstifadəçi adı və ya şifrə yanlışdır.';
     shake(document.querySelector('#admin-login .login-card'));
   }
 }
